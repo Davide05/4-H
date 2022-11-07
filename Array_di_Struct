@@ -1,0 +1,251 @@
+/** ****************************************************************************************
+* \mainpage <Array di struct>
+*
+* @brief <si provano dei semplici funzioni per gestire lo struct>
+* <specifiche del progetto>
+* <specifiche del collaudo>
+* 
+* @author <Davide Hu>
+* @date <03.11.2022> 
+*/
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//= = = INCLUDES = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#include <stdio.h>      //per input e output
+#include <stdlib.h>     //per system e switch
+#include <time.h>       //per rand
+#include <string.h>     //per le funzioni delle stringhe
+#define N 2    	  //numero studenti
+#define L 20   	  //lunghezza stringa
+#define V 5       //genera numeri casuali
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//= = = STRUCTS = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//dichiarazioni struct
+struct data   						//struct per la data
+{
+	int aa; char mm[L]; int gg;     //aa=anno; mm=mese; gg=giorno;
+}typedef data;
+
+struct studente						//struct che comprede la struct data 
+{
+	int matricola; char cognome[L]; data nascita; int voti[V];
+}typedef stud;
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//= = = FUNZIONI = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void carica(stud st[]);			//carica il vettore struct
+void stampa(stud st[]);	 		//stampa il vettore struct
+void maiuscola(stud st[]);	 	//cambia la prima lettera in maiuscola
+void ordina(stud st[]);                 //ordina in modo alfabetico 
+int maggiore(stud st[]);        //trova il numero maggiore, e lo prende volta
+int mediavoti(stud st[]);       //trova la media del singolo studente
+int cercamatricola(stud[]);     //cerca lo studente per matricola
+int cercacognome(stud[]);       //carca per cognome
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//= = = MAIN = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+int main()
+{
+	int r;
+	stud st[N];
+	srand(time(NULL));      
+	carica(st);
+	ordina(st);
+	stampa(st);	
+	r=cercamatricola(st);
+	printf("lo studente si trova nella matricola=\t%d",r+1); //se=0 allora non trovato
+	r=cercacognome(st);
+	printf("lo studente si trova nella posizione=\t%d", r+1); 
+}
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//= = = CODICE = DELLE = FUNZIONI = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+* @brief  carica lo struct
+* @param  stud st[]
+* @retval 
+* @author Davide
+*/
+void carica(stud st[])
+{
+	int a;
+	for(int i=0; i<N; i++)
+	{
+		printf("\ninserisci la matricola dello studente:\t");          scanf("%d", &st[i].matricola);
+		printf("\ninserisci il cognome dello studente:\t");            scanf("%s",  st[i].cognome);
+		printf("\ninserisci il giorno di nascita:\t");                 scanf("%d", &st[i].nascita.gg);
+		printf("\ninserisci il mese di nascita(in lettere):\t");       scanf("%s",  st[i].nascita.mm);
+		printf("\ninserisci l'anno di nascita:\t");                    scanf("%d", &st[i].nascita.aa);
+		for(int j=0; j<V; j++)
+		{
+			a=rand()%10+1;
+			st[i].voti[j]=a;
+		}	
+		system("cls");	
+	}
+}
+
+/** ****************************************************************************************
+* @brief  stampa lo struct
+* @param  stud st[]
+* @retval 
+* @author Davide
+*/
+
+void stampa(stud st[])
+{
+	int media=0, max=INT_MIN, r;
+	for(int i=0; i<N; i++)
+	{
+		printf("\nil numero della matricola=\t%d", st[i].matricola);  
+		maiuscola(st);   
+		printf("\nil cognome dello studente=\t%s",st[i].cognome);       
+		printf("\nla data di nascita=\t\t%d  %s  %d",st[i].nascita.gg,st[i].nascita.mm,st[i].nascita.aa);               
+		printf("\ni voti sono=\t");
+		for(int j=0; j<V; j++) 
+		{
+			printf("\t%d\t", st[i].voti[j]);
+			if(max<st[i].voti[j])
+			{
+				max=(st[i].voti[j]);	
+				r=i;
+			}
+		}   
+		media=mediavoti(st); 
+		printf("\nla media dei voti=\t%d\n\n",media);  media=0;   
+	}
+	printf("\nil voto il piu' alto=\t%d\tdello studente %s\n", max,st[r].cognome);     
+}
+
+/** ****************************************************************************************
+* @brief  converte la prima in maiuscola e resto in minuscolo
+* @param  stud st[]
+* @retval 
+* @author Davide
+*/
+void maiuscola(stud st[])
+{
+	int j;
+	for(int i=0; i<N; i++)    
+	{
+		j=0;   
+		if(st[i].cognome[j]>='a'&& st[i].cognome[j]<='z')				//controllo per mettere la prima lettera maiucola 		
+			st[i].cognome[j]-=32;                             
+		do{
+			j++;
+			if(st[i].cognome[j]>='A'&& st[i].cognome[j]<='Z')               //controllo per mettere il resto minuscolo
+				st[i].cognome[j]+=32;  
+		}while(st[i].cognome[j]!='\0');								
+	}
+}
+
+/** ****************************************************************************************
+* @brief  calcola la media di ogni studente
+* @param  stud st[]
+* @retval restituisce la media di ogni studente
+* @author Davide
+*/
+int mediavoti(stud st[])
+{
+	int i, j, media=0;
+		for(j=0; j<V; j++)
+		{
+			media+=st[i].voti[j];
+		}
+	media=media/V;
+	return media;
+}
+
+/** ****************************************************************************************
+* @brief  cerca lo studente con il voto maggiore
+* @param  stud st[]
+* @retval da il primo voto maggiore che incontra
+* @author Davide
+*/
+int maggiore(stud st[])
+{
+	int a=0;
+	for(int i=0; i<N; i++)				//il ciclo che scorre lo struct esterno
+		for(int j=0; j<V; j++)															
+			if(st[i].voti[j]>a)		//se il numero è maggiore di a 			
+				a=st[i].voti[j];	//il numero sostituisce a  
+	return a;
+}
+
+/** ****************************************************************************************
+* @brief  ordina in modo crescente lo struct
+* @param  stud st[]
+* @retval 
+* @author Davide
+*/
+void ordina(stud st[])
+{
+	char s[L]; int r;
+	do{								
+		r=0;
+		for(int i=0; i<N-1; i++)                                 //scorre tutto l'array
+		{
+			if(strcmp(st[i].cognome,st[i+1].cognome)==1)     //confronta se =1 allora il 1° è più grande 
+			{                                                //se =-1 allora il 1° è più piccolo //=0 se sono uguali
+				strcpy(s,st[i].cognome);
+				strcpy(st[i].cognome,st[i+1].cognome);		 //scambio di tre elemneti
+		        strcpy(st[i+1].cognome,s);
+		        r=1;
+			}
+		}
+	}while(r==1);	//bubble sort
+}
+
+/** ****************************************************************************************
+* @brief  cerca lo studente per matricola inserito
+* @param  stud st[]
+* @retval da la posizione dello studente ricercato, se non lo trova da -1
+* @author Davide
+*/
+int cercamatricola(stud st[])
+{
+	int r;
+	printf("\n\ninserisci un numero delle matricola=\t"); scanf("%d",&r); 
+	for(int i=0; i<N; i++)
+		if(st[i].matricola==r)
+		{
+			return i; 
+		}	
+	return -1;	
+}
+
+/** ****************************************************************************************
+* @brief  cerca lo studente per cognome inserito
+* @param  stud st[]
+* @retval da la posizione dello studente ricercato, se non lo trova da -1
+* @author Davide
+*/
+int cercacognome(stud st[])  
+{	
+	char s[L];
+	printf("\n\ninserisci un cognome dello studente=\t"); scanf("%s",s); 
+	for(int i=0; i<N; i++)    
+	{
+		int j=0;   
+		if(s[j]>='a'&& s[j]<='z')			    	//controllo per mettere la prima lettera maiucola 		
+			{s[j]-=32;}                            
+			while(s[j]!='\0')
+			{
+				j++;
+				if(s[j]>='A'&& s[j]<='Z')                   //controllo per mettere il resto minuscolo
+					s[j]+=32;  
+			}
+			
+			for(int i=0; i<N; i++)
+				if(strcmp(st[i].cognome,s)==0)              //ricerca del cognome
+				{
+					return i; 
+				}		
+	}   
+	return -1;
+}
