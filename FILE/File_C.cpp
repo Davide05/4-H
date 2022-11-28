@@ -18,15 +18,15 @@ int main()
 {
 	char file[]="Es_C.txt";						//nome delFile
 	int carattere=0,righe=0;		
-	int err;									//intero per chiudere il FILE
+	int err;							//intero per chiudere il FILE
 	char c,cp, parole=0;						//c=carattere preso dal FILE cp=carattere prima della c	
-	FILE *pf;									//puntaFile										
+	FILE *pf;							//puntaFile										
 	printf("Il contenuto del FILE:\n");		
 											
     pf=fopen(file, "r");						//apre il File
-	while(!feof(pf))							//ciclo per
+	while(!feof(pf))						//controlla se finisce il FILE
 	{										
-		c= fgetc(pf);							//prende la lettera										
+		c= fgetc(pf);																
 		printf("%c", c);
 		
 		if(c!=EOF && c!='\n')				
