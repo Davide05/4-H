@@ -70,16 +70,16 @@ void crypt(char f[],char f1[])
 	while(!feof(pf))						//controlla se ce ancora il testo
 	{
 		c=fgetc(pf);						//prende un caratere
-		if(c>='a'&&c<='z'||c>='A'&&c<='Z')	//controlla se è una letera
+		if(c>='a'&&c<='z'||c>='A'&&c<='Z')	//controlla se Ã¨ una letera
 		{
 			c-=3;							//sposta la posizione della lettera a 3 letere prima
-			if(c<'A' || c<'a' &&  c>'Z')	//se è più picolo di A ed compreso tra Z e ai
+			if(c<'A' || c<'a' &&  c>'Z')	//se Ã¨ piÃ¹ picolo di A ed compreso tra Z e ai
 			{
 				c+=26;						//aggiunge e prende la letera 
 			}
 		}
-		if(!feof(pf))						//se è diverso da \0
-		fputc(c,pf1);						//se è vero lo mette nel secondo FILE
+		if(!feof(pf))						//se Ã¨ diverso da \0
+		fputc(c,pf1);						//se Ã¨ vero lo mette nel secondo FILE
 	}
 	err= fclose(pf);						//chiude i FILE
 	err1=fclose(pf1);						
@@ -106,7 +106,7 @@ void decrypt(char f[],char f1[])
 	while(!feof(pf))						//controlla se ce ancora il testo
 	{
 		c=fgetc(pf);						//prende un caratere
-		if(c>='a'&&c<='z'||c>='A'&&c<='Z')	//controlla se è una letera
+		if(c>='a'&&c<='z'||c>='A'&&c<='Z')	//controlla se Ã¨ una letera
 		{
 			c+=3;							//sposta la posizione della lettera a 3 letere dopo
 			if(c>'Z' && c<'a'||c>'z')		//se compreso tra Z e a oppure piu grade di z
@@ -114,8 +114,8 @@ void decrypt(char f[],char f1[])
 				c-=26;						//dopo sottrato lo prende							
 			}
 		}
-		if(!feof(pf))						//se è diverso da \0
-		fputc(c,pf1);						//se è vero lo mette nel secondo FILE
+		if(!feof(pf))						//se Ã¨ diverso da \0
+		fputc(c,pf1);						//se Ã¨ vero lo mette nel secondo FILE
 	}
 	err=fclose(pf);						//chiude i FILE
 	err1=fclose(pf1);						
