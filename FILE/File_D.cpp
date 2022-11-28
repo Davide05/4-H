@@ -48,7 +48,7 @@ int main()
 				}
 				else
 				{
-					fputc(c,pf2);								//invece se è dispari mette nel terzo FILE
+					fputc(c,pf2);								//invece se Ã¨ dispari mette nel terzo FILE
 					fputc((int)'\t',pf2);						
 				}
 			}
