@@ -26,7 +26,7 @@ int main()
 	if(pf!=NULL)
 	{
 		printf("Il contenuto del primo FILE:\n\n");
-		pFile=fopen(file, "r");						//apre il File
+		pf=fopen(file, "r");						//apre il File
     
 		while(!feof(pf))							//controlla se finisce il FILE
 		{
