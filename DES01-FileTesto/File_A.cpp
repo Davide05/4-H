@@ -16,42 +16,42 @@
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 int main()
 {
-	char Es_A[]="FILE/Es_A.txt";					//nome del primo File
-	char Es_A1[]="FILE/Es_A1.txt";				//nome del secondo File
+	char file []="FILE/Es_A.txt";					//nome del primo File
+	char file1[]="FILE/Es_A1.txt";					//nome del secondo File
 	int err, err1;								
-	char c;									//carattere
-	FILE *pFile;							//puntaFile		
-	FILE *pFile1;
+	char c;											//carattere
+	FILE *pf;										//puntaFile		
+	FILE *pf1;
 
 	if(pf!=NULL)
 	{
 		printf("Il contenuto del primo FILE:\n\n");
-		pFile=fopen(Es_A, "r");						//apre il File
+		pFile=fopen(file, "r");						//apre il File
     
-		while(!feof(pFile))							//controlla se finisce il FILE
+		while(!feof(pf))							//controlla se finisce il FILE
 		{
-			c= fgetc(pFile);						//prende la lettera
+			c= fgetc(pf);							//prende la lettera
 			printf("%c", c);						//stampa
 		}	
-		err= fclose(pFile);					
+		err= fclose(pf);					
 		printf("\n");		
 		printf("Adesso il programma riapre in un nuovo FILE lo stesso contenuto tutto in maiscolo\n");
 		system("pause");
 	
-		pFile=fopen(Es_A, "r");			 		//apre il File
-		pFile1=fopen(Es_A1, "w");
+		pf=fopen(file, "r");			 		//apre il File
+		pf1=fopen(file1, "w");
 		printf("\n");
-		while(!feof(pFile))						//controlla se finisce il FILE
+		while(!feof(pf))						//controlla se finisce il FILE
 		{
-			c= fgetc(pFile);					//prende la lettera
+			c= fgetc(pf);						//prende la lettera
 			if(c>='a' && c<='z')				//converte tutto in maiscolo
 				c-=32;				
 			printf("%c", c);					//stampa
-			if(!feof(pFile))					//per togliere l'ultimo carattere in piu'
-				fputc(c,pFile1);
+			if(!feof(pf))						//per togliere l'ultimo carattere in piu'
+				fputc(c,pf1);
 		}
-		err= fclose(pFile);		
-		err1= fclose(pFile1);				
+		err= fclose(pf);		
+		err1= fclose(pf1);				
 		printf("\n\n");
 		system("pause");
 	}
