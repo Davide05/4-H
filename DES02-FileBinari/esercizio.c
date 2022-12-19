@@ -16,12 +16,12 @@
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 #include <stdio.h>							//per printf/scanf
 #include <stdlib.h>							//per system
-#define V 8									//voti
+#define V 2									//voti
 #define L 10								//lunghezza stringa del nome e del mese
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 //= = = FUNZIONI = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void inserisciRecord(char file[], int numRecord);
+void inserisciRecord(char fileName[], int numRecord);
 void stampaFile(char fileName[]);
 int ricercaRecord(char fileName[]);
 int stampaRecord(char fileName[], int posizione);
@@ -57,23 +57,7 @@ int main()
 	inserisciRecord(fileName, numRecord);
 
 	stampaFile(fileName);
-/*
-	while(!feof(pf))				//controlla se finisce il FILE
-	{
-	c= fgetc(pf);					//prende la lettera
-	printf("%c", c);				//stampa
-	}	
 
-	err= fclose(pf);					
-	printf("\n");		
-	system("pause");
-
-	//if(!feof(pf))						//per togliere l'ultimo carattere in piu'
-
-	err= fclose(pf);					
-	printf("\n\n");
-	system("pause");
-*/
 	return 0;
 }												
 
@@ -86,13 +70,13 @@ int main()
 * @author Davide Hu
 * @version 1.0 19.12.2022 Versione iniziale
 */
-void inserisciRecord(char file[], int numRecord)
+void inserisciRecord(char fileName[], int numRecord)
 {	
 	stud recordino;
-	int err, cont=1;
+	int err, cont=1, a=0;
 	FILE* pf; 								
 
-	pf=fopen(file, "ab");			//apre il File
+	pf=fopen(fileName, "ab");			//apre il File
 	if(pf==NULL)
 	{
 		printf("\nIL FILE NON PUO'ESSERE APERTO!\n");
@@ -102,32 +86,49 @@ void inserisciRecord(char file[], int numRecord)
 	for(int i=0; i<numRecord; i++)
 	{
 		printf("\n%d^ studente:\n", cont); cont++;
-		printf("inserisci il cognome:\t");            			scanf("%s",  recordino.cognome);
-		printf("inserisci il giorno di nascita:\t");            scanf("%d", &recordino.nascita.gg);
-		printf("inserisci il mese di nascita(in lettere):\t");  scanf("%s",  recordino.nascita.mm);
-		printf("inserisci l'anno di nascita:\t");               scanf("%d", &recordino.nascita.aa);
-		printf("** *************************************************************************************");
-		for(int j=0; j<V; j++) //TODO: inseriti dall'utente
+		printf("inserisci il cognome:  ");          			 scanf("%s",  recordino.cognome);
+		printf("inserisci il giorno di nascita:   ");           scanf("%d", &recordino.nascita.gg);
+		printf("inserisci il mese di nascita(in lettere):   "); scanf("%s",  recordino.nascita.mm);
+		printf("inserisci l'anno di nascita:    ");             scanf("%d", &recordino.nascita.aa);
+		for(int j=0; j<V; j++) 
 		{
-			int a=rand()%10+1;
+			printf("inserisci il voto:\t"); scanf("%d", a);
 			recordino.voti[j]=a;
 		}
+		printf("** *************************************************************************************\n");
 	}
 }
 
 /** ****************************************************************************************
 * @brief  Stampa su monitor (una riga per record) tutte le informazioni contenute nel file; 
-* @param  <elenco dei parametri in ingresso alla funzione>
-* @retval <valori restituiti>
-* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+* @param  file: nome del file da aprire
+* @retval nessuno
+* @see    inserisciRecord
 *
 * @author Davide Hu
 * @version 1.0 <15.12.2022> <Versione iniziale>
-* @version 1.1 <data> <Descrivere le modifiche apportate>
 */
 void stampaFile(char fileName[]) 
 {
-	;
+	stud recordino;
+	int err, cont=1, a=0;
+	char c;
+	FILE* pf;
+	while(!feof(pf))		//controlla se finisce il FILE
+	{
+		c= fgetc(pf);		//prende la lettera
+		printf("%c", c);	//stampa
+	}	
+
+	err= fclose(pf);					
+	printf("\n");		
+	system("pause");
+
+	//if(!feof(pf))			//per togliere l'ultimo carattere in piu'
+
+	err= fclose(pf);					
+	printf("\n");
+	system("pause");
 }
 /** ****************************************************************************************
 * @brief <inserire una breve descrizione della routine>
