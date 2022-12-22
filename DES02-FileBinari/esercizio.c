@@ -8,8 +8,8 @@
 * @date <15.12.2022> 
 * @version 1.0 <12.12.2022> Versione iniziale
 * @version 1.1 <19/12/2022> Proseguimento programma
-* @version 1.1 <21/12/2022> Proseguimento programma
-* @version 1.1 <22/12/2022> Programma incompleto
+* @version 1.2 <21/12/2022> Proseguimento programma
+* @version 1.3 <22/12/2022> Commenti delle funzioni
 */
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //= = = INCLUDE = DEFINE = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
@@ -17,7 +17,7 @@
 #include <stdio.h>			//per printf/scanf
 #include <stdlib.h>			//per system
 #include <string.h>			//per stcmp							
-#define V 2				//voti
+#define V 2					//voti
 #define L 10				//lunghezza stringa del nome e del mese
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 //= = = FUNZIONI = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -33,9 +33,9 @@ int numeroRecord(char fileName[]);
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 struct data 							
 {
-	int gg;		//giorno
+	int gg;			//giorno
 	char mm[L]; 	//mese
-	int aa;		//anno
+	int aa;			//anno
 }typedef data; 		//nome di defoult data
 
 struct stud 								
@@ -52,22 +52,27 @@ int main()
 	char fileName[]="datifile.txt";	//nome del File da aprire
 	int err, numRecord;
 	int r;       //richiama le funzioni							
-	char c;
+	int posizione; //dare la posizione del record che si vuole trovare
 	
 	
 	printf("inserisci il numero di record che voresti creare:\t");
 	scanf("%d", &numRecord);
 	inserisciRecord(fileName, numRecord);
+
  
-	printf("la funzione esgue la stampa del file di record\n\n");
+	printf("la funzione esegue la stampa del file di record\n\n");
 	stampaFile(fileName);
 
-	r=ricercaRecord(fileName);
-	if(r==0)
-		printf("stringa trovata\n");
-	if(r==-1)
-		printf("stringa non trovata\n");
-		
+
+	printf("la funzione fa la ricerca della stringa(cognome)\ninserisci:   ");
+	r=ricercaRecord(fileName);            
+	system("pause");
+				
+	printf("la funzione controlla la posizione e stampa il record\n");
+	printf("inserisci una posizione(numero):   ");
+	scanf("%d", &posizione);
+	printf("\n");		
+	r=stampaRecord(fileName, posizione);
 
 	return 0;
 }												
@@ -79,7 +84,7 @@ int main()
 * @see stampaRecord
 *
 * @author Davide Hu
-* @version 1.0 19.12.2022 Versione iniziale
+* @version 1.0  19.12.2022 Versione iniziale
 */
 void inserisciRecord(char fileName[], int numRecord)
 {		
@@ -137,7 +142,7 @@ void stampaFile(char fileName[])
 	}
 	
 	while(!feof(pf))								
-		{						     //1°parametro= record, 2°/3°posizione del record, 4°puntafile
+		{						    					 //1°parametro= record, 2°/3°posizione del record, 4°puntafile
 			err=fread(&recordino,sizeof(recordino),1,pf);//estrapola un record dal file, e lo mette nel record(programma)
 			if(err!=0)
 			{
@@ -157,18 +162,16 @@ void stampaFile(char fileName[])
 	printf("****************************************************************************\n");
 	err= fclose(pf);					
 	system("pause");
-	system("cls");
 }
 
 /** ****************************************************************************************
 * @brief controlla la posizione inserito nel parametro e visualizza il record
-* @param  fileName: nome del file da aprire; una stringa inserito per la ricerca
+* @param  fileName: nome del file da aprire;
 * @retval restituisce due interi, 0 se esiste, -1 se non esiste
 * @see stampaRecord
 *
 * @author Davide Hu
 * @version 1.0 <15.12.2022> <Versione iniziale>
-* @version 1.1 <data> <Descrivere le modifiche apportate>
 */
 int ricercaRecord(char fileName[])
 {
@@ -188,11 +191,8 @@ int ricercaRecord(char fileName[])
 		return -1;
 	}
 	
-	printf("la funzione fa la ricerca della stringa inserita, inserisci:\n");
-	scanf("%s",stringa);
-	system("pause");
-	system("cls");
-												
+	scanf("%s",stringa);  //stringa chiesta nel main
+	printf("\n");											
 	while(!feof(pf))								
 	{
 		err=fread(&recordino,sizeof(recordino),1,pf);	
@@ -220,77 +220,55 @@ int ricercaRecord(char fileName[])
 			}
 		}
 	}
-		if(flag==0)			//se non vine trovato la stringa nel record
-			cont=-1;		//restituisce -1
+	if(flag==0)			//se non vine trovato la stringa nel record
+		cont=-1;		//restituisce -1
 	err=fclose(pf);								
 	return cont;
 }
 
 /*******************************************************************************************
 * @brief controlla la posizione inserito nel parametro e modifica il record
-* @param  una stringa e un intero
+* @param  char fileName[]: nome del file da aprire; int posizione: indica la posizione di un record
 * @retval restituisce due interi, 0 se esiste, -1 se non esiste
-* @see ricercaRecord
+* @see stampaFile
 *
 * @author Davide Hu
 * @version 1.0 <21.12.2022> <Versione iniziale>
-* @version 1.1 <data> <Descrivere le modifiche apportate>
 */
 int stampaRecord(char fileName[], int posizione)
 {
 	stud recordino;
 	int err;
-	FILE* pf=fopen(fileName,"rb");
+	int cont;   //variabile di controllo
+	FILE* pf=fopen(fileName,"rb"); //lettura in binario
 
 	if(pf==NULL)
 	{
 		printf("\nIL FILE NON PUO'ESSERE APERTO!\n");
-		return;
+		return -1;
 	}
-}
-
-/** ****************************************************************************************
-* @brief controlla la posizione inserita nel parametro e modifica il record
-* @param  fileName: nome del file da aprire
-* @retval restituisce due interi, 0 se esiste, -1 se non esiste
-* @see 
-*
-* @author Davide Hu
-* @version 1.0 <21.12.2022> <Versione iniziale>
-* @version 1.1 <data> <Descrivere le modifiche apportate>
-*/
-int correggiRecord(char fileName[], int posizione)
-{
-	stud recordino;
-	int err;
-	FILE* pf=fopen(fileName,"rb");
-
-	if(pf==NULL)
-	{
-		printf("\nIL FILE NON PUO'ESSERE APERTO!\n");
-		return;
-	}
-}
-
-/** ****************************************************************************************
-* @brief controlla quanti record ci sono
-* @param  fileName: nome del file da aprire
-* @retval un intero che rappresenta il numero di record
-* @see 
-*
-* @author Davide Hu
-* @version 1.0 <21.12.2022> <Versione iniziale>
-* @version 1.1 <data> <Descrivere le modifiche apportate>
-*/
-int numeroRecord(char fileName[])
-{
-	stud recordino;
-	int err;
-	FILE* pf=fopen(fileName,"rb");
-
-	if(pf==NULL)
-	{
-		printf("\nIL FILE NON PUO'ESSERE APERTO!\n");
-		return;
-	}
+	
+	fseek(pf,posizione*sizeof(recordino),SEEK_SET);	//posiziona il puntatore sulla posizione desiderata	
+	
+	cont=fread(&recordino, sizeof(recordino),1,pf);	//funzione di lettura per leggere i dati nel file
+		
+		if(cont>0)   //controlla che il record viene letto 
+		{
+			printf("cognome:   %s\n",recordino.cognome); 
+			printf("data di nascita:   ");
+			printf("%d/",recordino.nascita.gg);
+			printf("%s/",recordino.nascita.mm);
+			printf("%d\n",recordino.nascita.aa);
+			printf("voti:\n");
+			for(int i=0;i<V;i++)
+			{
+				printf("%d   ", recordino.voti[i]);
+			}
+			printf("\n");
+			fclose(pf);
+			return 0;
+		}
+		else
+			fclose(pf);
+		return -1;		
 }
