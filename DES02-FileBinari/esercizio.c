@@ -17,7 +17,7 @@
 #include <stdio.h>			//per printf/scanf
 #include <stdlib.h>			//per system
 #include <string.h>			//per stcmp							
-#define V 2					//voti
+#define V 2				//voti
 #define L 10				//lunghezza stringa del nome e del mese
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 //= = = FUNZIONI = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -33,9 +33,9 @@ int numeroRecord(char fileName[]);
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 struct data 							
 {
-	int gg;			//giorno
+	int gg;		//giorno
 	char mm[L]; 	//mese
-	int aa;			//anno
+	int aa;		//anno
 }typedef data; 		//nome di defoult data
 
 struct stud 								
@@ -97,7 +97,7 @@ void inserisciRecord(char fileName[], int numRecord)
 	for(int i=0; i<numRecord; i++)
 	{
 		printf("\n%d^ studente:\n", cont); cont++;
-		printf("inserisci il cognome:  ");          			scanf("%s",  recordino.cognome);
+		printf("inserisci il cognome:  ");          		scanf("%s",  recordino.cognome);
 		printf("inserisci il giorno di nascita(numeri):   ");   scanf("%d", &recordino.nascita.gg);
 		printf("inserisci il mese di nascita(in lettere):   "); scanf("%s",  recordino.nascita.mm);
 		printf("inserisci l'anno di nascita(numeri):    ");     scanf("%d", &recordino.nascita.aa);
@@ -137,7 +137,7 @@ void stampaFile(char fileName[])
 	}
 	
 	while(!feof(pf))								
-		{												 //1°parametro= record, 2°/3°posizione del record, 4°puntafile
+		{						     //1°parametro= record, 2°/3°posizione del record, 4°puntafile
 			err=fread(&recordino,sizeof(recordino),1,pf);//estrapola un record dal file, e lo mette nel record(programma)
 			if(err!=0)
 			{
@@ -176,7 +176,7 @@ int ricercaRecord(char fileName[])
 	int err; 
 	int media, eta, anno=2022;
 	int finalvote=0; 	//voto finale
-	int flag=0;			//variabile di controllo
+	int flag=0;		//variabile di controllo
 	int cont=0;
 	char stringa[L];
 	FILE* pf;										
@@ -220,8 +220,8 @@ int ricercaRecord(char fileName[])
 			}
 		}
 	}
-		if(flag==0)										//se non vine trovato la stringa nel record
-			cont=-1;									//restituisce -1
+		if(flag==0)			//se non vine trovato la stringa nel record
+			cont=-1;		//restituisce -1
 	err=fclose(pf);								
 	return cont;
 }
